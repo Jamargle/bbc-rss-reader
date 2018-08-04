@@ -53,9 +53,4 @@ class NewsFragment : Fragment() {
         newsView.adapter = NewsAdapter()
     }
 
-    }
-
-    }
-
-
 }
