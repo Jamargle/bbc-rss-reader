@@ -57,9 +57,11 @@ class NewsFragment : Fragment() {
             Toast.makeText(activity, "We had an issue. ${it?.message}", Toast.LENGTH_SHORT).show()
         })
 
-        viewModel.getNavigationToDetails().observe(this, Observer {
-            val intent = Intent(activity, DetailActivity::class.java)
-            startActivity(intent)
+        viewModel.getNavigationToDetails().observe(this, Observer { articleToShow ->
+            articleToShow?.let {
+                val intent = Intent(activity, DetailActivity::class.java)
+                startActivity(intent.putExtras(DetailActivity.newBundle(articleToShow.link)))
+            }
         })
     }
 
