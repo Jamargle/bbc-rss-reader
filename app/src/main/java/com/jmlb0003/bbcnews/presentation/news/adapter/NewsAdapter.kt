@@ -3,13 +3,14 @@ package com.jmlb0003.bbcnews.presentation.news.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.jmlb0003.bbcnews.R
+import com.jmlb0003.bbcnews.domain.model.NewsItem
 import com.jmlb0003.bbcnews.utils.inflate
 
 class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 
-    private val dataSet = mutableListOf<String>()
+    private val dataSet = mutableListOf<NewsItem>()
 
-    fun bindNews(news: List<String>) {
+    fun bindNews(news: List<NewsItem>) {
         dataSet.clear()
         dataSet.addAll(news)
         notifyDataSetChanged()

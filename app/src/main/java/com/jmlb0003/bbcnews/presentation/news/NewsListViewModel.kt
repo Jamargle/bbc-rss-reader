@@ -18,7 +18,7 @@ class NewsListViewModel
 @Inject constructor(private val repository: NetworkNewsRepository,
                     private val schedulers: Schedulers) : ViewModel() {
 
-    val newsList = ObservableField<List<String>>()
+    val newsList = ObservableField<List<NewsItem>>()
     val state = ObservableField<State>(State.Initial)
 
     private val errorCallback = MutableLiveData<Throwable>()
@@ -39,7 +39,7 @@ class NewsListViewModel
     }
 
     private fun handleSuccessResult(news: List<NewsItem>) {
-        newsList.set(news.map { newsItem -> newsItem.title })
+        newsList.set(news)
         if (news.isEmpty()) {
             state.set(State.Empty)
         } else {
