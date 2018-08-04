@@ -4,15 +4,19 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.jmlb0003.bbcnews.BR
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.di.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_details.view.*
 import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
@@ -32,10 +36,27 @@ class DetailsFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_details, container, false)
         arguments?.let {
             val detailsViewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailsViewModel::class.java)
+            initWebView(rootView, detailsViewModel)
             detailsViewModel.setNewsItemToShow(it.getString(NEWS_ITEM_TO_SHOW))
             initDataBinding(rootView, detailsViewModel)
         }
         return rootView
+    }
+
+    private fun initWebView(rootView: View, detailsViewModel: DetailsViewModel) {
+        rootView.news_details_view.webViewClient = object : WebViewClient() {
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                detailsViewModel.displayLoading()
+                super.onPageStarted(view, url, favicon)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                detailsViewModel.hideLoading()
+            }
+            
+        }
     }
 
     private fun initDataBinding(rootView: View, detailsViewModel: DetailsViewModel) {

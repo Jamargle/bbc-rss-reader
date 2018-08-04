@@ -4,14 +4,36 @@
 
     <data>
 
+        <import type="com.jmlb0003.bbcnews.presentation.news.State" />
+
         <variable
             name="viewModel"
             type="com.jmlb0003.bbcnews.presentation.newsdetail.DetailsViewModel" />
     </data>
 
-    <WebView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:article="@{viewModel.newsLink}" />
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/loading_view_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{viewModel.state instanceof State.Busy}" />
+
+        <WebView
+            android:id="@+id/news_details_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:article="@{viewModel.newsLink}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </layout>
