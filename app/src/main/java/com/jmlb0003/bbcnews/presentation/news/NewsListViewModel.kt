@@ -1,5 +1,7 @@
 package com.jmlb0003.bbcnews.presentation.news
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
 import com.jmlb0003.bbcnews.domain.model.NewsItem
@@ -19,7 +21,10 @@ class NewsListViewModel
     val newsList = ObservableField<List<String>>()
     val state = ObservableField<State>(State.Initial)
 
+    private val errorCallback = MutableLiveData<Throwable>()
     private val disposables = CompositeDisposable()
+
+    fun getErrorCallback(): LiveData<Throwable> = errorCallback
 
     fun displayNewsFeed() {
         displayLoading()
@@ -35,7 +40,6 @@ class NewsListViewModel
 
     private fun handleSuccessResult(news: List<NewsItem>) {
         newsList.set(news.map { newsItem -> newsItem.title })
-        state.set(State.Done)
         if (news.isEmpty()) {
             state.set(State.Empty)
         } else {
@@ -45,6 +49,7 @@ class NewsListViewModel
 
     private fun handleErrorResult(exception: Throwable) {
         state.set(State.Error)
+        errorCallback.postValue(exception)
     }
 
     override fun onCleared() {
