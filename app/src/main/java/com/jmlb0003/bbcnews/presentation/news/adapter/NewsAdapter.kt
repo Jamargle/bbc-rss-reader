@@ -6,7 +6,7 @@ import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.domain.model.NewsItem
 import com.jmlb0003.bbcnews.utils.inflate
 
-class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
+class NewsAdapter(private val newsClickListener: (NewsItem) -> Unit) : RecyclerView.Adapter<NewsViewHolder>() {
 
     private val dataSet = mutableListOf<NewsItem>()
 
@@ -16,7 +16,14 @@ class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = NewsViewHolder(parent.inflate(R.layout.item_list_news))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            NewsViewHolder(parent.inflate(R.layout.item_list_news)).apply {
+                itemView.setOnClickListener { view ->
+                    (view.tag as? NewsItem)?.let {
+                        newsClickListener.invoke(it)
+                    }
+                }
+            }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.bindNews(dataSet[position])

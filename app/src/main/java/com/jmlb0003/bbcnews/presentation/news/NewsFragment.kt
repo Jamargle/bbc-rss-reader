@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.jmlb0003.bbcnews.BR
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.di.ViewModelFactory
+import com.jmlb0003.bbcnews.domain.model.NewsItem
 import com.jmlb0003.bbcnews.presentation.news.adapter.NewsAdapter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_news_list.view.*
@@ -59,7 +60,11 @@ class NewsFragment : Fragment() {
     private fun initRecyclerView(rootView: View) {
         val newsView = rootView.news_recycler_view
         newsView.setHasFixedSize(true)
-        newsView.adapter = NewsAdapter()
+        newsView.adapter = NewsAdapter(this::onNewsClicked)
+    }
+
+    private fun onNewsClicked(news: NewsItem) {
+        Toast.makeText(activity, "The news ${news.title} has been clicked", Toast.LENGTH_SHORT).show()
     }
 
 }

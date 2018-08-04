@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.item_list_news.view.*
 class NewsViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bindNews(news: NewsItem) {
+        itemView.tag = news
         view.news_title.text = news.title
     }
 
