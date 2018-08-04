@@ -11,7 +11,8 @@ import javax.inject.Singleton
 @Component(modules = [
     ReaderAppModule::class,
     ViewModelModule::class,
-    ActivityBuilder::class])
+    ActivityBuilder::class,
+    RepositoryModule::class])
 interface ReaderAppComponent : AndroidInjector<ReaderApplication> {
 
     fun inject(application: Application)
