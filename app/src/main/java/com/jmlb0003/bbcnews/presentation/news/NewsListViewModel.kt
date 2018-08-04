@@ -4,25 +4,25 @@ import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
 import com.jmlb0003.bbcnews.domain.model.NewsItem
 import com.jmlb0003.bbcnews.domain.repository.NetworkNewsRepository
+import com.jmlb0003.bbcnews.utils.Schedulers
 import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NewsListViewModel
-@Inject constructor(private val repository: NetworkNewsRepository) : ViewModel() {
+@Inject constructor(private val repository: NetworkNewsRepository,
+                    private val schedulers: Schedulers) : ViewModel() {
 
     val newsList = ObservableField<List<String>>()
     private val disposables = CompositeDisposable()
 
     fun fetchNewsFeed() {
         disposables.add(Single.create(SingleOnSubscribe<List<NewsItem>> { emitter -> emitter.onSuccess(repository.obtainNews()) })
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(schedulers.getBackgroundThread())
+                                .observeOn(schedulers.getUiThread())
                                 .subscribe(this::handleSuccessResult, this::handleErrorResult))
     }
 
