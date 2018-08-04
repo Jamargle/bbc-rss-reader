@@ -1,4 +1,4 @@
-package com.jmlb0003.bbcnews.presentation.news
+package com.jmlb0003.bbcnews.presentation.news.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

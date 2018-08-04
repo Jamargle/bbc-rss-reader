@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.jmlb0003.bbcnews.BR
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.di.ViewModelFactory
+import com.jmlb0003.bbcnews.presentation.news.adapter.NewsAdapter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_news_list.view.*
 import javax.inject.Inject
