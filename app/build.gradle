@@ -50,6 +50,11 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
     //endregion
 
+    //region Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    //endregion
+
     //region testing
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"

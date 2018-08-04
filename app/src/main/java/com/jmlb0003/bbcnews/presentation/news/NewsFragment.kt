@@ -7,16 +7,24 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.di.ViewModelFactory
+import com.jmlb0003.bbcnews.domain.model.NewsItem
+import com.jmlb0003.bbcnews.domain.repository.NetworkNewsRepository
 import dagger.android.support.AndroidSupportInjection
+import io.reactivex.Single
+import io.reactivex.SingleOnSubscribe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_news_list.view.*
 import javax.inject.Inject
 
 class NewsFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject lateinit var repository: NetworkNewsRepository
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -37,7 +45,21 @@ class NewsFragment : Fragment() {
     private fun initRecyclerView(rootView: View) {
         val newsView = rootView.news_recycler_view
         newsView.setHasFixedSize(true)
-        newsView.adapter = NewsAdapter(mutableListOf("ASDasdas 1 ", "asdasfdasd ra", "asdasfasgaodna sodnas"))
+
+        val disposables = CompositeDisposable()
+
+        disposables.add(Single.create(SingleOnSubscribe<List<NewsItem>> { emitter -> emitter.onSuccess(repository.obtainNews()) })
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(this::displaySuccess, this::displayError))
+    }
+
+    fun displaySuccess(news: List<NewsItem>) {
+        Toast.makeText(activity, "Downloaded ${news.size}!!!", Toast.LENGTH_SHORT).show()
+    }
+
+    fun displayError(exception: Throwable) {
+        Toast.makeText(activity, exception.message, Toast.LENGTH_SHORT).show()
     }
 
     private fun initViewModel() {
