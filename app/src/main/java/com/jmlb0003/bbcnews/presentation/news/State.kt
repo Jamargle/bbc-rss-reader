@@ -10,4 +10,6 @@ sealed class State {
 
     object Empty : State()
 
+    object Error : State()
+
 }

@@ -44,7 +44,7 @@ class NewsListViewModel
     }
 
     private fun handleErrorResult(exception: Throwable) {
-        //  TODO display some error
+        state.set(State.Error)
     }
 
     override fun onCleared() {
