@@ -1,4 +1,4 @@
-package com.jmlb0003.bbcnews
+package com.jmlb0003.bbcnews.utils
 
 import android.databinding.BindingAdapter
 import android.support.v7.widget.RecyclerView

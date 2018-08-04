@@ -1,4 +1,4 @@
-package com.jmlb0003.bbcnews
+package com.jmlb0003.bbcnews.utils
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

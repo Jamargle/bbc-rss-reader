@@ -3,7 +3,7 @@ package com.jmlb0003.bbcnews.presentation.news
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.jmlb0003.bbcnews.R
-import com.jmlb0003.bbcnews.inflate
+import com.jmlb0003.bbcnews.utils.inflate
 
 class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 
