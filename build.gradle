@@ -34,6 +34,17 @@ ext {
 
     // App dependencies
     supportLibraryVersion = '27.1.1'
+    // Retrofit2
+    retrofitVersion = '2.3.0'
+    // OkHttp
+    okHttpVersion = '3.8.0'
+    // Dagger2
+    dagger2Version = '2.14.1'
+    // RxJava
+    rxJavaVersion = '2.1.10'
+    rxAndroidVersion = '2.0.2'
+    // MVVM stuff
+    archLifecycleVersion = '1.1.1'
 
     // Testing
     junitVersion = '4.12'
