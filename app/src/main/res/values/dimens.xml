@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- News list screen -->
+    <dimen name="loading_view_height">100dp</dimen>
     <dimen name="news_picture_height">200dp</dimen>
 
     <!-- Standard margins -->

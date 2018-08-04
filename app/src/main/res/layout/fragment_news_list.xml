@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="com.jmlb0003.bbcnews.presentation.news.State" />
+
         <variable
             name="viewModel"
             type="com.jmlb0003.bbcnews.presentation.news.NewsListViewModel" />
@@ -15,6 +17,15 @@
         android:layout_height="match_parent"
         tools:context=".presentation.news.MainActivity">
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/loading_view_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{viewModel.state instanceof State.Busy}" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/news_recycler_view"
             android:layout_width="match_parent"
@@ -25,6 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:news="@{viewModel.newsList}"
+            app:visible="@{viewModel.state instanceof State.Done}"
             tools:listitem="@layout/item_list_news" />
 
     </android.support.constraint.ConstraintLayout>

@@ -44,7 +44,7 @@ class NewsFragment : Fragment() {
         DataBindingUtil.bind<ViewDataBinding>(view)?.apply {
             setVariable(BR.viewModel, newsListViewModel)
         }
-        newsListViewModel.fetchNewsFeed()
+        newsListViewModel.displayNewsFeed()
     }
 
     private fun initRecyclerView(rootView: View) {

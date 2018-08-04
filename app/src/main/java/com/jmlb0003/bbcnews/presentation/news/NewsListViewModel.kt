@@ -17,17 +17,25 @@ class NewsListViewModel
                     private val schedulers: Schedulers) : ViewModel() {
 
     val newsList = ObservableField<List<String>>()
+    val state = ObservableField<State>(State.Initial)
+
     private val disposables = CompositeDisposable()
 
-    fun fetchNewsFeed() {
+    fun displayNewsFeed() {
+        displayLoading()
         disposables.add(Single.create(SingleOnSubscribe<List<NewsItem>> { emitter -> emitter.onSuccess(repository.obtainNews()) })
                                 .subscribeOn(schedulers.getBackgroundThread())
                                 .observeOn(schedulers.getUiThread())
                                 .subscribe(this::handleSuccessResult, this::handleErrorResult))
     }
 
+    private fun displayLoading() {
+        state.set(State.Busy)
+    }
+
     private fun handleSuccessResult(news: List<NewsItem>) {
         newsList.set(news.map { newsItem -> newsItem.title })
+        state.set(State.Done)
     }
 
     private fun handleErrorResult(exception: Throwable) {
