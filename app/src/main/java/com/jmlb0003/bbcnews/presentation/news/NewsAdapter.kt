@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.inflate
 
-class NewsAdapter(private val dataSet: MutableList<String>) : RecyclerView.Adapter<NewsViewHolder>() {
+class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
+
+    private val dataSet = mutableListOf<String>()
 
     fun bindNews(news: List<String>) {
         dataSet.clear()
