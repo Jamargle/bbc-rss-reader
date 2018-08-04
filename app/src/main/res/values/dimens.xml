@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- News list screen -->
+    <dimen name="loading_view_height">100dp</dimen>
     <dimen name="news_picture_height">200dp</dimen>
+    <dimen name="empty_list_image_height">300dp</dimen>
 
     <!-- Standard margins -->
     <dimen name="margin_normal">16dp</dimen>
@@ -9,4 +11,5 @@
 
     <!-- Text sizes -->
     <dimen name="title_normal">18sp</dimen>
+    <dimen name="empty_news_list_text">30sp</dimen>
 </resources>

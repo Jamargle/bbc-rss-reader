@@ -1,5 +1,6 @@
 package com.jmlb0003.bbcnews.presentation.news
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.jmlb0003.bbcnews.BR
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.di.ViewModelFactory
@@ -32,19 +34,26 @@ class NewsFragment : Fragment() {
             savedInstanceState: Bundle?): View? {
 
         val rootView = inflater.inflate(R.layout.fragment_news_list, container, false)
+        val newsListViewModel = ViewModelProviders.of(this, viewModelFactory).get(NewsListViewModel::class.java)
         rootView?.let {
             initRecyclerView(it)
-            initDataBinding(it)
+            initDataBinding(it, newsListViewModel)
+            subscribeToEvents(newsListViewModel)
         }
+        newsListViewModel.displayNewsFeed()
         return rootView
     }
 
-    private fun initDataBinding(view: View) {
-        val newsListViewModel = ViewModelProviders.of(this, viewModelFactory).get(NewsListViewModel::class.java)
+    private fun initDataBinding(view: View, viewModel: NewsListViewModel) {
         DataBindingUtil.bind<ViewDataBinding>(view)?.apply {
-            setVariable(BR.viewModel, newsListViewModel)
+            setVariable(BR.viewModel, viewModel)
         }
-        newsListViewModel.fetchNewsFeed()
+    }
+
+    private fun subscribeToEvents(viewModel: NewsListViewModel) {
+        viewModel.getErrorCallback().observe(this, Observer {
+            Toast.makeText(activity, "We had an issue. ${it?.message}", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun initRecyclerView(rootView: View) {

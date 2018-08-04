@@ -1,5 +1,7 @@
 package com.jmlb0003.bbcnews.presentation.news
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
 import com.jmlb0003.bbcnews.domain.model.NewsItem
@@ -17,21 +19,37 @@ class NewsListViewModel
                     private val schedulers: Schedulers) : ViewModel() {
 
     val newsList = ObservableField<List<String>>()
+    val state = ObservableField<State>(State.Initial)
+
+    private val errorCallback = MutableLiveData<Throwable>()
     private val disposables = CompositeDisposable()
 
-    fun fetchNewsFeed() {
+    fun getErrorCallback(): LiveData<Throwable> = errorCallback
+
+    fun displayNewsFeed() {
+        displayLoading()
         disposables.add(Single.create(SingleOnSubscribe<List<NewsItem>> { emitter -> emitter.onSuccess(repository.obtainNews()) })
                                 .subscribeOn(schedulers.getBackgroundThread())
                                 .observeOn(schedulers.getUiThread())
                                 .subscribe(this::handleSuccessResult, this::handleErrorResult))
     }
 
+    private fun displayLoading() {
+        state.set(State.Busy)
+    }
+
     private fun handleSuccessResult(news: List<NewsItem>) {
         newsList.set(news.map { newsItem -> newsItem.title })
+        if (news.isEmpty()) {
+            state.set(State.Empty)
+        } else {
+            state.set(State.Done)
+        }
     }
 
     private fun handleErrorResult(exception: Throwable) {
-        //  TODO display some error
+        state.set(State.Error)
+        errorCallback.postValue(exception)
     }
 
     override fun onCleared() {
