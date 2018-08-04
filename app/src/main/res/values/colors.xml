@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="news_title_background">#88f2f4ff</color>
+    <color name="empty_list_image">@color/black</color>
+    <color name="news_placeholder_icon">@color/black</color>
     <color name="black">@android:color/black</color>
     <color name="white">@android:color/white</color>
 </resources>

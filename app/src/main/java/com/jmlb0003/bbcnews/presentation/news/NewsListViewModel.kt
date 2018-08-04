@@ -36,6 +36,11 @@ class NewsListViewModel
     private fun handleSuccessResult(news: List<NewsItem>) {
         newsList.set(news.map { newsItem -> newsItem.title })
         state.set(State.Done)
+        if (news.isEmpty()) {
+            state.set(State.Empty)
+        } else {
+            state.set(State.Done)
+        }
     }
 
     private fun handleErrorResult(exception: Throwable) {

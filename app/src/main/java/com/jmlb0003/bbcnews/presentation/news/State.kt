@@ -8,4 +8,6 @@ sealed class State {
 
     object Done : State()
 
+    object Empty : State()
+
 }

@@ -26,6 +26,31 @@
             app:layout_constraintTop_toTopOf="parent"
             app:visible="@{viewModel.state instanceof State.Busy}" />
 
+        <ImageView
+            android:id="@+id/empty_list_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/empty_list_image_height"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:contentDescription="@string/content_description_empty_list_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_news_list_empty"
+            app:visible="@{viewModel.state instanceof State.Empty}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:gravity="center"
+            android:text="@string/empty_new_list"
+            android:textSize="@dimen/empty_news_list_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/empty_list_image"
+            app:visible="@{viewModel.state instanceof State.Empty}" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/news_recycler_view"
             android:layout_width="match_parent"
