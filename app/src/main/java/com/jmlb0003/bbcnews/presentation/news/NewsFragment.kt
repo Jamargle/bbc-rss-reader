@@ -60,7 +60,7 @@ class NewsFragment : Fragment() {
         viewModel.getNavigationToDetails().observe(this, Observer { articleToShow ->
             articleToShow?.let {
                 val intent = Intent(activity, DetailActivity::class.java)
-                startActivity(intent.putExtras(DetailActivity.newBundle(articleToShow.link)))
+                startActivity(intent.putExtras(DetailActivity.newBundle(articleToShow)))
             }
         })
     }

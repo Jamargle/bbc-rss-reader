@@ -15,6 +15,7 @@ import android.webkit.WebViewClient
 import com.jmlb0003.bbcnews.BR
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.di.ViewModelFactory
+import com.jmlb0003.bbcnews.domain.model.NewsItem
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import javax.inject.Inject
@@ -37,7 +38,8 @@ class DetailsFragment : Fragment() {
         arguments?.let {
             val detailsViewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailsViewModel::class.java)
             initWebView(rootView, detailsViewModel)
-            detailsViewModel.setNewsItemToShow(it.getString(NEWS_ITEM_TO_SHOW))
+            val newsItem = it.getParcelable<NewsItem>(NEWS_ITEM_TO_SHOW)
+            detailsViewModel.setNewsItemToShow(newsItem.link)
             initDataBinding(rootView, detailsViewModel)
         }
         return rootView
@@ -55,7 +57,7 @@ class DetailsFragment : Fragment() {
                 super.onPageFinished(view, url)
                 detailsViewModel.hideLoading()
             }
-            
+
         }
     }
 
@@ -69,9 +71,9 @@ class DetailsFragment : Fragment() {
 
         private const val NEWS_ITEM_TO_SHOW = "Key:news_item_to_show"
 
-        fun newInstance(newsItemLink: String) = DetailsFragment().apply {
+        fun newInstance(newsItem: NewsItem) = DetailsFragment().apply {
             arguments = Bundle().apply {
-                putString(NEWS_ITEM_TO_SHOW, newsItemLink)
+                putParcelable(NEWS_ITEM_TO_SHOW, newsItem)
             }
         }
     }
