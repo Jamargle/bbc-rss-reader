@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jmlb0003.bbcnews.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun ViewGroup.inflate(@LayoutRes layoutResourceId: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutResourceId, this, attachToRoot)
@@ -22,3 +24,13 @@ internal fun Resources.isForTablet(): Boolean {
 }
 
 internal fun AppCompatActivity.viewExists(@IdRes viewId: Int) = findViewById<View>(viewId) != null
+
+internal fun Date.getTimeAgo(): DatePeriod {
+    val currentTime = Date().time
+    return when {
+        currentTime - this.time <= 60 * 1000 -> DatePeriod.JustNow
+        currentTime - this.time <= 60 * 60 * 1000 -> DatePeriod.MinutesAgo(((currentTime - this.time) / (60 * 1000)).toInt())
+        currentTime - this.time <= 24 * 60 * 60 * 1000 -> DatePeriod.HoursAgo(((currentTime - this.time) / (60 * 60 * 1000)).toInt())
+        else -> DatePeriod.FullTimeDate(SimpleDateFormat("EEE, dd MMM", Locale.getDefault()).format(this))
+    }
+}
