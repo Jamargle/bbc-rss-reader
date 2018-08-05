@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.webkit.WebView
 import android.widget.ImageView
+import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.domain.model.NewsItem
 import com.jmlb0003.bbcnews.presentation.news.adapter.NewsAdapter
+import com.squareup.picasso.Picasso
 
 @BindingAdapter("news")
 internal fun setNews(recyclerView: RecyclerView, newsList: List<NewsItem>?) {
@@ -28,4 +30,11 @@ internal fun setVisibility(view: View, visible: Boolean) {
 }
 
 @BindingAdapter("imageSrc")
-internal fun setImageResource(imageView: ImageView, imageUrl: String?) {}
+internal fun setImageResource(imageView: ImageView, imageUrl: String?) {
+    imageUrl?.let {
+        Picasso.with(imageView.context)
+                .load(imageUrl).fit().centerCrop()
+                .placeholder(R.drawable.ic_news)
+                .into(imageView)
+    }
+}
