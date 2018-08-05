@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">BBC News</string>
+    <string name="content_description_news_icon">This is an picture related to a news</string>
+    <string name="empty_new_list">There are no news to show</string>
+    <string name="content_description_empty_list_image">This is the image to show when there are no news to show</string>
+    <string name="action_search">Search</string>
+
+    <string name="no_internet_title">There is no Internet connection</string>
+    <string name="enable_internet_message">Please, enable Internet to see more news.</string>
+    <string name="go_to_settings">Go to Settings</string>
+
+    <string name="right_now">Just now</string>
+    <plurals name="minutes_ago">
+        <item quantity="one">%s minute ago</item>
+        <item quantity="other">%s minutes ago</item>
+    </plurals>
+    <plurals name="hours_ago">
+        <item quantity="one">%s hour ago</item>
+        <item quantity="other">%s hours ago</item>
+    </plurals>
 </resources>

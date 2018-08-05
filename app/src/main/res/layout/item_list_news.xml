@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="article"
+            type="com.jmlb0003.bbcnews.domain.model.NewsItem" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/news_item_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingEnd="@dimen/margin_small"
+        android:paddingStart="@dimen/margin_small">
+
+        <TextView
+            android:id="@+id/news_title"
+            style="@style/news_items_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="@{article.title}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="@dimen/title_normal"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/news_picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="The title of the news that may have up to 2 lines" />
+
+        <ImageView
+            android:id="@+id/news_picture"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/news_picture_height"
+            android:contentDescription="@string/content_description_news_icon"
+            app:imageSrc="@{article.image.url}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/news_title"
+            tools:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/news_date"
+            style="@style/news_items_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:formattedDate="@{article.publicationDate}"
+            app:layout_constraintBottom_toBottomOf="@+id/news_picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Fri, 03 Aug 2018 14:42" />
+
+        <TextView
+            style="@style/news_items_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:text="@{article.description}"
+            android:textSize="@dimen/title_normal"
+            app:layout_constraintBottom_toTopOf="@+id/news_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="About 25 students were injured as a protest over road safety ended in violence, reports say." />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

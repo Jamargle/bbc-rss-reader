@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="com.jmlb0003.bbcnews.presentation.State" />
+
+        <variable
+            name="viewModel"
+            type="com.jmlb0003.bbcnews.presentation.news.NewsListViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.news.MainActivity">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/loading_view_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{viewModel.state instanceof State.Busy}" />
+
+        <ImageView
+            android:id="@+id/empty_list_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/empty_list_image_height"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:contentDescription="@string/content_description_empty_list_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_news_list_empty"
+            app:visible="@{viewModel.state instanceof State.Empty || viewModel.state instanceof State.Error}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:gravity="center"
+            android:text="@string/empty_new_list"
+            android:textSize="@dimen/empty_news_list_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/empty_list_image"
+            app:visible="@{viewModel.state instanceof State.Empty || viewModel.state instanceof State.Error}" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/news_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:news="@{viewModel.newsList}"
+            app:visible="@{viewModel.state instanceof State.Done}"
+            tools:listitem="@layout/item_list_news" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
