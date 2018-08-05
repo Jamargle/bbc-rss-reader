@@ -1,4 +1,4 @@
-package com.jmlb0003.bbcnews.presentation.news
+package com.jmlb0003.bbcnews.presentation
 
 sealed class State {
 

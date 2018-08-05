@@ -1,11 +1,11 @@
 package com.jmlb0003.bbcnews.presentation.news
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
 import com.jmlb0003.bbcnews.domain.model.NewsItem
 import com.jmlb0003.bbcnews.domain.repository.NetworkNewsRepository
+import com.jmlb0003.bbcnews.presentation.State
 import com.jmlb0003.bbcnews.presentation.navigation.NewsNavigator
 import com.jmlb0003.bbcnews.utils.Schedulers
 import com.jmlb0003.bbcnews.utils.SingleLiveEvent

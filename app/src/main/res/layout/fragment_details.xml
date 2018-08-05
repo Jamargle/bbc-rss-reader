@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.jmlb0003.bbcnews.presentation.news.State" />
+        <import type="com.jmlb0003.bbcnews.presentation.State" />
 
         <variable
             name="viewModel"
