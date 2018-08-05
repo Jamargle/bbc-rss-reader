@@ -35,11 +35,10 @@ class DetailActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
     }
 
-    private fun initToolbar(title: String) {
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.title = title
+    private fun initToolbar(title: String) = supportActionBar?.let { actionBar ->
+        with(actionBar) {
+            setDisplayHomeAsUpEnabled(true)
+            setTitle(title)
         }
     }
 

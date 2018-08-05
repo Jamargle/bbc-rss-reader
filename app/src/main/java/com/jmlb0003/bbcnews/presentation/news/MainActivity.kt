@@ -20,5 +20,15 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initToolbar()
     }
+
+    private fun initToolbar() = supportActionBar?.let { actionBar ->
+        with(actionBar) {
+            setDisplayUseLogoEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            setLogo(R.drawable.ic_news)
+        }
+    }
+
 }
