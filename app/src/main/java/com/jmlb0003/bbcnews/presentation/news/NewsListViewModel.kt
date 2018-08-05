@@ -9,8 +9,6 @@ import com.jmlb0003.bbcnews.presentation.State
 import com.jmlb0003.bbcnews.presentation.navigation.NewsNavigator
 import com.jmlb0003.bbcnews.utils.Schedulers
 import com.jmlb0003.bbcnews.utils.SingleLiveEvent
-import io.reactivex.Single
-import io.reactivex.SingleOnSubscribe
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,7 +30,7 @@ class NewsListViewModel
     // region Display news list
     fun displayNewsFeed() {
         displayLoading()
-        disposables.add(Single.create(SingleOnSubscribe<List<NewsItem>> { emitter -> emitter.onSuccess(repository.obtainNews()) })
+        disposables.add(repository.obtainNews()
                                 .subscribeOn(schedulers.getBackgroundThread())
                                 .observeOn(schedulers.getUiThread())
                                 .subscribe(this::handleSuccessResult, this::handleErrorResult))
@@ -43,10 +41,10 @@ class NewsListViewModel
     }
 
     private fun handleSuccessResult(news: List<NewsItem>) {
-        newsList.set(news.sortedWith(compareByDescending { it.publicationDate }))
         if (news.isEmpty()) {
             state.set(State.Empty)
         } else {
+            newsList.set(news.sortedWith(compareByDescending { it.publicationDate }))
             state.set(State.Done)
         }
     }

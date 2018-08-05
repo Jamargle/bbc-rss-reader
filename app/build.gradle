@@ -25,6 +25,10 @@ android {
     dataBinding {
         enabled = true
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -64,6 +68,10 @@ dependencies {
 
     //region testing
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$rootProject.mockitoInlineVersion"
+    testImplementation "com.nhaarman:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+
     androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
     //endregion
