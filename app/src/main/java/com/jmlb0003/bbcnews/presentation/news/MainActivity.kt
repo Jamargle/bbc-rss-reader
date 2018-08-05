@@ -1,11 +1,17 @@
 package com.jmlb0003.bbcnews.presentation.news
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
+import android.widget.Toast
 import com.jmlb0003.bbcnews.R
+import com.jmlb0003.bbcnews.di.ViewModelFactory
+import com.jmlb0003.bbcnews.presentation.newsdetail.DetailActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -14,6 +20,7 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
+    @Inject lateinit var viewModelFactory: ViewModelFactory
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
@@ -23,6 +30,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolbar()
+        subscribeToEvents()
     }
 
     private fun initToolbar() = supportActionBar?.let { actionBar ->
@@ -49,6 +57,21 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             })
         }
         return true
+    }
+
+    private fun subscribeToEvents() {
+        val newsListViewModel = ViewModelProviders.of(this, viewModelFactory).get(NewsListViewModel::class.java)
+
+        newsListViewModel.getErrorCallback().observe(this, Observer {
+            Toast.makeText(this, "We had an issue. ${it?.message}", Toast.LENGTH_SHORT).show()
+        })
+
+        newsListViewModel.getNavigationToDetails().observe(this, Observer { articleToShow ->
+            articleToShow?.let {
+                val intent = Intent(this, DetailActivity::class.java)
+                startActivity(intent.putExtras(DetailActivity.newBundle(articleToShow)))
+            }
+        })
     }
 
 }
