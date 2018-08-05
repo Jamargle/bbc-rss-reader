@@ -43,7 +43,7 @@ class NewsListViewModel
     }
 
     private fun handleSuccessResult(news: List<NewsItem>) {
-        newsList.set(news)
+        newsList.set(news.sortedWith(compareByDescending { it.publicationDate }))
         if (news.isEmpty()) {
             state.set(State.Empty)
         } else {
