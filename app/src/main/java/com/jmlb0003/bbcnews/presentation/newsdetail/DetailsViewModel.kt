@@ -2,7 +2,7 @@ package com.jmlb0003.bbcnews.presentation.newsdetail
 
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
-import com.jmlb0003.bbcnews.presentation.news.State
+import com.jmlb0003.bbcnews.presentation.State
 import javax.inject.Inject
 import javax.inject.Singleton
 
