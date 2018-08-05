@@ -18,7 +18,24 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:padding="@dimen/margin_normal">
+        android:paddingEnd="@dimen/margin_small"
+        android:paddingStart="@dimen/margin_small">
+
+        <TextView
+            android:id="@+id/news_title"
+            style="@style/news_items_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="@{article.title}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="@dimen/title_normal"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/news_picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="The title of the news that may have up to 2 lines" />
 
         <ImageView
             android:id="@+id/news_picture"
@@ -28,26 +45,33 @@
             app:imageSrc="@{article.image.url}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/news_title"
+            tools:background="@color/colorAccent" />
 
         <TextView
-            android:id="@+id/news_title"
+            android:id="@+id/news_date"
+            style="@style/news_items_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:background="@color/news_title_background"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="@dimen/margin_small"
-            android:text="@{article.title}"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/black"
-            android:textSize="@dimen/title_normal"
+            android:maxLines="1"
+            android:text="@{article.publicationDate.toString()}"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             app:layout_constraintBottom_toBottomOf="@+id/news_picture"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="The title of the news that may have up to 2 lines" />
+            tools:text="Fri, 03 Aug 2018 14:42" />
+
+        <TextView
+            style="@style/news_items_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:text="@{article.description}"
+            android:textSize="@dimen/title_normal"
+            app:layout_constraintBottom_toTopOf="@+id/news_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="About 25 students were injured as a protest over road safety ended in violence, reports say." />
 
     </android.support.constraint.ConstraintLayout>
 
