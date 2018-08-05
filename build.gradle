@@ -54,4 +54,6 @@ ext {
     espressoVersion = '3.0.2'
     // Mockito
     mockitoVersion = '2.16.0'
+    mockitoKotlinVersion = '1.6.0'
+    mockitoInlineVersion = '2.21.0'
 }
