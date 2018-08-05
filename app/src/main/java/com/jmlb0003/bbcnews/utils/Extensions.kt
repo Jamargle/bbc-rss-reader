@@ -1,8 +1,11 @@
 package com.jmlb0003.bbcnews.utils
 
+import android.content.Context
 import android.content.res.Resources
+import android.net.ConnectivityManager
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
@@ -33,4 +36,15 @@ internal fun Date.getTimeAgo(): DatePeriod {
         currentTime - this.time <= 24 * 60 * 60 * 1000 -> DatePeriod.HoursAgo(((currentTime - this.time) / (60 * 60 * 1000)).toInt())
         else -> DatePeriod.FullTimeDate(SimpleDateFormat("EEE, dd MMM", Locale.getDefault()).format(this))
     }
+}
+
+internal fun Fragment.hasNetworkConnection(): Boolean {
+    activity?.let { activity ->
+        (activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).let { connectivityManager ->
+            connectivityManager.activeNetworkInfo?.isConnectedOrConnecting?.let { connectionAvailable ->
+                return connectionAvailable
+            }
+        }
+    }
+    return false
 }

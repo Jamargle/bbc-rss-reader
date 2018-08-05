@@ -57,11 +57,17 @@ class NewsListViewModel
     }
     //endregion
 
-    // region Navigation to details
+    // region Navigation
     fun getNavigationToDetails(): LiveData<NewsItem> = navigator.navigateToDetailsTrigger
 
     fun onNewsClicked(news: NewsItem) {
         navigator.navigateToDetailsTrigger.postValue(news)
+    }
+
+    fun getNavigationToSettings(): LiveData<Unit> = navigator.navigateToDeviceSettingsTrigger
+
+    fun onGoToSettings() {
+        navigator.navigateToDeviceSettingsTrigger.postValue(Unit)
     }
     //endregion
 

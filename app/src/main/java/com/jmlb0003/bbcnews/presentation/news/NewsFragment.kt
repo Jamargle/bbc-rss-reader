@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.jmlb0003.bbcnews.BR
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.di.ViewModelFactory
 import com.jmlb0003.bbcnews.presentation.news.adapter.NewsAdapter
+import com.jmlb0003.bbcnews.utils.hasNetworkConnection
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_news_list.view.*
 import javax.inject.Inject
@@ -37,8 +39,17 @@ class NewsFragment : Fragment() {
             initRecyclerView(it, NewsAdapter(newsListViewModel::onNewsClicked))
             initDataBinding(it, newsListViewModel)
         }
-        newsListViewModel.displayNewsFeed()
         return rootView
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val newsListViewModel = ViewModelProviders.of(this, viewModelFactory).get(NewsListViewModel::class.java)
+        if (hasNetworkConnection()) {
+            newsListViewModel.displayNewsFeed()
+        } else {
+            showConnectToInternetDialog(newsListViewModel)
+        }
     }
 
     private fun initDataBinding(view: View, viewModel: NewsListViewModel) {
@@ -51,6 +62,20 @@ class NewsFragment : Fragment() {
         val newsView = rootView.news_recycler_view
         newsView.setHasFixedSize(true)
         newsView.adapter = adapter
+    }
+
+    private fun showConnectToInternetDialog(newsListViewModel: NewsListViewModel) {
+        context?.let {
+            AlertDialog.Builder(it)
+                    .setTitle(R.string.no_internet_title)
+                    .setMessage(R.string.enable_internet_message)
+                    .setPositiveButton(R.string.go_to_settings) { _, _ -> newsListViewModel.onGoToSettings() }
+                    .setNegativeButton(android.R.string.no) { _, _ ->
+                        // do nothing
+                    }
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show()
+        }
     }
 
 }
