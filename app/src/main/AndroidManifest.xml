@@ -24,7 +24,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.newsdetail.DetailActivity" />
+        <activity
+            android:name=".presentation.newsdetail.DetailActivity"
+            android:parentActivityName=".presentation.news.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.news.MainActivity" />
+        </activity>
 
     </application>
 
