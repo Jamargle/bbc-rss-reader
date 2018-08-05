@@ -2,7 +2,7 @@
 <resources>
     <!-- News list screen -->
     <dimen name="loading_view_height">100dp</dimen>
-    <dimen name="news_picture_height">200dp</dimen>
+    <dimen name="news_picture_height">350dp</dimen>
     <dimen name="empty_list_image_height">300dp</dimen>
 
     <!-- Standard margins -->
