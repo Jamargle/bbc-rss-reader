@@ -35,7 +35,7 @@ object ServiceGenerator {
 
     private class DateTransformer : Transform<Date> {
 
-        private val format = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.getDefault())
+        private val format = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US)
 
         override fun write(value: Date?): String {
             return format.format(value)

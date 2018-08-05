@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
 import com.jmlb0003.bbcnews.domain.model.NewsItem
 import com.jmlb0003.bbcnews.domain.repository.NetworkNewsRepository
+import com.jmlb0003.bbcnews.presentation.navigation.NewsNavigator
 import com.jmlb0003.bbcnews.utils.Schedulers
 import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
@@ -16,9 +17,10 @@ import javax.inject.Singleton
 @Singleton
 class NewsListViewModel
 @Inject constructor(private val repository: NetworkNewsRepository,
+                    private val navigator: NewsNavigator,
                     private val schedulers: Schedulers) : ViewModel() {
 
-    val newsList = ObservableField<List<String>>()
+    val newsList = ObservableField<List<NewsItem>>()
     val state = ObservableField<State>(State.Initial)
 
     private val errorCallback = MutableLiveData<Throwable>()
@@ -26,6 +28,7 @@ class NewsListViewModel
 
     fun getErrorCallback(): LiveData<Throwable> = errorCallback
 
+    // region Display news list
     fun displayNewsFeed() {
         displayLoading()
         disposables.add(Single.create(SingleOnSubscribe<List<NewsItem>> { emitter -> emitter.onSuccess(repository.obtainNews()) })
@@ -39,7 +42,7 @@ class NewsListViewModel
     }
 
     private fun handleSuccessResult(news: List<NewsItem>) {
-        newsList.set(news.map { newsItem -> newsItem.title })
+        newsList.set(news)
         if (news.isEmpty()) {
             state.set(State.Empty)
         } else {
@@ -51,6 +54,15 @@ class NewsListViewModel
         state.set(State.Error)
         errorCallback.postValue(exception)
     }
+    //endregion
+
+    // region Navigation to details
+    fun getNavigationToDetails(): LiveData<NewsItem> = navigator.navigateToDetailsTrigger
+
+    fun onNewsClicked(news: NewsItem) {
+        navigator.navigateToDetailsTrigger.postValue(news)
+    }
+    //endregion
 
     override fun onCleared() {
         super.onCleared()
