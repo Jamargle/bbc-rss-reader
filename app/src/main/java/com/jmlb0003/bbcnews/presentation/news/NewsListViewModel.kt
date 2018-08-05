@@ -8,6 +8,7 @@ import com.jmlb0003.bbcnews.domain.model.NewsItem
 import com.jmlb0003.bbcnews.domain.repository.NetworkNewsRepository
 import com.jmlb0003.bbcnews.presentation.navigation.NewsNavigator
 import com.jmlb0003.bbcnews.utils.Schedulers
+import com.jmlb0003.bbcnews.utils.SingleLiveEvent
 import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
 import io.reactivex.disposables.CompositeDisposable
@@ -23,7 +24,7 @@ class NewsListViewModel
     val newsList = ObservableField<List<NewsItem>>()
     val state = ObservableField<State>(State.Initial)
 
-    private val errorCallback = MutableLiveData<Throwable>()
+    private val errorCallback = SingleLiveEvent<Throwable>()
     private val disposables = CompositeDisposable()
 
     fun getErrorCallback(): LiveData<Throwable> = errorCallback
