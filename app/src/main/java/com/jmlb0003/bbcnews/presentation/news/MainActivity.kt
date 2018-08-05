@@ -4,11 +4,11 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
-import android.view.View
 import android.widget.Toast
 import com.jmlb0003.bbcnews.R
 import com.jmlb0003.bbcnews.di.ViewModelFactory
@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolbar()
+    }
+
+    override fun onStart() {
+        super.onStart()
         subscribeToEvents()
     }
 
@@ -83,6 +87,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     val intent = Intent(this, DetailActivity::class.java)
                     startActivity(intent.putExtras(DetailActivity.newBundle(articleToShow)))
                 }
+            }
+        })
+        newsListViewModel.getNavigationToSettings().observe(this, Observer { it ->
+            it?.let {
+                startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
             }
         })
     }
